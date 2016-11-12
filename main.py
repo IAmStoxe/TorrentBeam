@@ -13,7 +13,7 @@ def load_config():
 def get_single_site_info(site_name):
     config = load_config()
     for item in config:
-        if item['name'] == site_name:
+        if item['name'].lower() == site_name.lower():
             return item
 
 
