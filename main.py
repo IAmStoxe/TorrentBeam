@@ -36,25 +36,31 @@ def torlock(search_term):
     config = get_single_site_info('TorLock')
     search_url = config['search_url'] % search_term
     html_doc = call_url(search_url)
-    soup = BeautifulSoup(html_doc, 'html.parser')
-
-    added_sel, link_sel, seeds_sel, title_sel = load_css_selectors(config)
-
-    abs_links, added_date, seeds, titles = parse_document(added_sel, link_sel, search_url, seeds_sel, soup, title_sel)
+    parsed_results = parse_document(html_doc, search_url, config)
 
     ret_arr = []
-    for i in range(titles.__len__()):
-        ret_arr.append(SearchResult(titles[i], abs_links[i], added_date[i], seeds[i]))
+    for i in range(parsed_results['links'].__len__()):
+        ret_arr.append(SearchResult(parsed_results['titles'][i].get_text(),
+                                    parsed_results['links'][i],
+                                    parsed_results['added'][i].get_text(),
+                                    parsed_results['seeds'][i].get_text()))
     return ret_arr
 
 
-def parse_document(added_sel, link_sel, search_url, seeds_sel, soup, title_sel):
+def parse_document(html, search_url, config):
+    soup = BeautifulSoup(html, 'html.parser')
+    added_sel, link_sel, seeds_sel, title_sel = load_css_selectors(config)
     titles = soup.select(title_sel)
     rel_links = soup.select(link_sel)
     abs_links = get_absolute_urls(search_url, rel_links)
     added_date = soup.select(added_sel)
     seeds = soup.select(seeds_sel)
-    return abs_links, added_date, seeds, titles
+    return {
+        "links": abs_links,
+        "added": added_date,
+        "seeds": seeds,
+        "titles": titles
+    }
 
 
 def load_css_selectors(config):
