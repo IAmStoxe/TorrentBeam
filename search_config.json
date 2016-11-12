@@ -1,0 +1,38 @@
+[
+  {
+    "name": "",
+    "search_url": "",
+    "test_search_url": "",
+    "results_css_selector": {
+      "link": "",
+      "title": "",
+      "size": "",
+      "seeds": "",
+      "added": ""
+    }
+  },
+  {
+    "name": "TorLock",
+    "search_url": "https://www.torlock.com/all/torrents/%s.html",
+    "test_search_url": "https://www.torlock.com/all/torrents/batman.html",
+    "results_css_selector": {
+      "main": ".panel-default",
+      "link": ".panel-default .table-condensed td a",
+      "title": ".panel-default .table-condensed b",
+      "added": ".panel-default .td",
+      "size": ".panel-default .ts",
+      "seeds": ".panel-default .tul"
+    }
+  },
+  {
+    "name": "Zooqle",
+    "search_url": "https://zooqle.com/search?q=%s",
+    "test_search_url": "https://zooqle.com/search?q=batman",
+    "results_css_selector": {
+      "title": "",
+      "size": "",
+      "seeds": "",
+      "added": ""
+    }
+  }
+]
